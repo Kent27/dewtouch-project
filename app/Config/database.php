@@ -71,10 +71,10 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' 		 => '',
-		'login'      => '',
-		'password'   => '',
-		'database'   => '',
+		'host' 		 => '127.0.0.1',
+		'login'      => 'kent',
+		'password'   => 'secret',
+		'database'   => 'dewtouch',
 		'prefix'     => '',
 		'encoding'   => 'utf8',
 	);
