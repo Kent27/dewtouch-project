@@ -31,18 +31,18 @@ The table you start with</div>
 </thead>
 
 <tbody>
-	<tr>
-	<td></td>
-	<td><textarea name="data[1][description]" class="m-wrap  description required" rows="2" ></textarea></td>
-	<td><input name="data[1][quantity]" class=""></td>
-	<td><input name="data[1][unit_price]"  class=""></td>
-	
-</tr>
+	<tr id="row1">
+        <td name><span id="del1" class="btn mini delbutton" onclick="delObj(1)">
+        <i class="icon-remove"></i></span></td>
+        <td name="data[1][description]" class="" input-text data-type="textarea"><p></p></td>
+        <td name="data[1][quantity]" class="" input-text data-type="number"><p></p></td>
+        <td name="data[1][unit_price]"  class="" input-text data-type="number"><p></p></td>
+    </tr>
 
 </tbody>
 
 </table>
-
+<input type="hidden" id="counter" value=1 />
 
 <p></p>
 <div class="alert alert-info ">
@@ -51,7 +51,7 @@ Video Instruction</div>
 
 <p style="text-align:left;">
 <video width="78%"   controls>
-  <source src="/video/q3_2.mov">
+  <source src="<?php echo Router::url('/') ?>/video/q3_2.mov">
 Your browser does not support the video tag.
 </video>
 </p>
@@ -63,17 +63,52 @@ Your browser does not support the video tag.
 <?php $this->start('script_own');?>
 <script>
 $(document).ready(function(){
-
+    // Add Rows
 	$("#add_item_button").click(function(){
 
+        var table = $('table > tbody:last-child');
+        $('#counter').val(parseInt($('#counter').val())+1);
+        var counter = $('#counter').val();
 
-		alert("suppose to add a new row");
+        var row = '<tr id="row'+counter+'"><td name><span id="del'+counter+'" class="btn mini delbutton" onclick="delObj('+counter+')">'+
+        '<i class="icon-remove"></i></span></td><td name="data['+counter+'][description]" class="" input-text data-type="textarea"><p></p></td>'+
+        '<td name="data['+counter+'][quantity]" class="" input-text data-type="number"><p></p></td>'+
+        '<td name="data['+counter+'][unit_price]"  class="" input-text data-type="number"><p></p></td></tr>';
+        table.append(row);
 		
 
-		});
+	});
 
+    $('body').on('click', '[input-text]', function(){
+  
+        var $el = $(this);
+
+        // Change text into textarea
+        var $input = $('<textarea class="m-wrap  description required" rows="2"/>').val( $el.text() );
+
+        if($el.data('type')!='textarea'){ // If not textarea
+            $input = $('<input type="'+$el.data('type')+'"/>').val( $el.text() );
+        }
+
+        $el.find('p').replaceWith( $input );
+        
+        // Change it back into text
+        var save = function(){
+            var $p = $('<p />').text( $input.val() );
+            $input.replaceWith( $p );
+        };
+        
+        $input.one('blur', save).focus();
+    
+    });
 	
 });
+
+//Delete Rows
+function delObj(i){
+    $('#row'+i).remove();
+}
+
 </script>
 <?php $this->end();?>
 

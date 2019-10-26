@@ -3,33 +3,41 @@
 
 
 <?php echo $this->Form->create('Type',array('id'=>'form_type','type'=>'file','class'=>'','method'=>'POST','autocomplete'=>'off','inputDefaults'=>array(
-				
-				'label'=>false,'div'=>false,'type'=>'text','required'=>false)))?>
+                'label'=>false,'div'=>false,'type'=>'text','required'=>false),
+                'url' => array('controller' => 'Format', 'action' => 'save')))?>
 	
 <?php echo __("Hi, please choose a type below:")?>
 <br><br>
 
-<?php $options_new = array(
- 		'Type1' => __('<span class="showDialog" data-id="dialog_1" style="color:blue">Type1</span><div id="dialog_1" class="hide dialog" title="Type 1">
- 				<span style="display:inline-block"><ul><li>Description .......</li>
- 				<li>Description 2</li></ul></span>
- 				</div>'),
-		'Type2' => __('<span class="showDialog" data-id="dialog_2" style="color:blue">Type2</span><div id="dialog_2" class="hide dialog" title="Type 2">
- 				<span style="display:inline-block"><ul><li>Desc 1 .....</li>
- 				<li>Desc 2...</li></ul></span>
- 				</div>')
-		);?>
+<?php $options_new = array('Type1', 'Type2');?>
 
-<?php echo $this->Form->input('type', array('legend'=>false, 'type' => 'radio', 'options'=>$options_new,'before'=>'<label class="radio line notcheck">','after'=>'</label>' ,'separator'=>'</label><label class="radio line notcheck">'));?>
+<?php echo $this->Form->input('type', array('legend'=>false, 'type' => 'radio','value'=>'0', 'options'=>$options_new,'before'=>'<label class="radio line notcheck" data-toggle="tooltip" title="
+        <strong>Type 1</strong>
+        <ul>
+            <li>Description...</li>
+            <li>Description 2</li>
+        </ul>" data-html="true">','after'=>'</label>' ,'separator'=>'</label><label class="radio line notcheck" data-toggle="tooltip" title="
+        <strong>Type 2</strong>
+        <ul>
+            <li>Desc 1...</li>
+            <li>Desc 2...</li>
+        </ul>" data-html="true">'));?>
 
 
-<?php echo $this->Form->end();?>
+<?php echo $this->Form->end('Save');?>
 
 </div>
 
 <style>
-.showDialog:hover{
-	text-decoration: underline;
+
+
+.tooltip { 
+    left: 90px !important;
+}
+
+.tooltip > .tooltip-inner {
+  background-color: white; 
+  color: black; 
 }
 
 #message1 .radio{
@@ -51,16 +59,12 @@
 <script>
 
 $(document).ready(function(){
-	$(".dialog").dialog({
-		autoOpen: false,
-		width: '500px',
-		modal: true,
-		dialogClass: 'ui-dialog-blue'
-	});
-
-	
-	$(".showDialog").click(function(){ var id = $(this).data('id'); $("#"+id).dialog('open'); });
-
+    // Toggle
+    $('[data-toggle="tooltip"]').tooltip({ 
+        placement: "right",
+        container: '#form_type',
+        
+    });   
 })
 
 

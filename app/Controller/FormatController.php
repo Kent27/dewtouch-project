@@ -16,6 +16,16 @@
 			
 			
 // 			$this->set('title',__('Question: Please change Pop Up to mouse over (soft click)'));
-		}
+        }
+        
+        // Show result after clicking button Save
+        public function save(){
+            $this->setFlash('This is the Result');
+            
+            $this->set('option',$this->request->data['Type']['type']);
+			
+			$this->set('title',__('Chosen Record'));
+			
+        }
 		
 	}
